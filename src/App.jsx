@@ -362,8 +362,8 @@ export default function App() {
     return { ...f, displayLang: nextLang };
   }));
 
-  const AI_STUDIO_PROXY_URL = "https://ais-pre-chn3bsf3ur6vatranz4rl3-12007850683.asia-east1.run.app/api/generate";
-
+  const AI_STUDIO_PROXY_URL = "/api/generate";
+  
   const fetchWithRetry = async (payload, retries = 5, signal) => {
     const delays = [1000, 2000, 4000, 8000, 16000];
     
