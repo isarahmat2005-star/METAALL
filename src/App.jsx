@@ -1231,7 +1231,7 @@ Kembalikan seluruh data JSON (English, Indonesia, & Mandarin) secara lengkap dan
 
   if (!isAuthenticated) {
       return (
-          <div className="flex items-center justify-center w-full h-[90vh] bg-slate-100 relative overflow-hidden" style={{ fontFamily: "'Share Tech', sans-serif", backgroundImage: 'linear-gradient(rgba(59, 130, 246, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(59, 130, 246, 0.05) 1px, transparent 1px)', backgroundSize: '20px 20px' }}>
+          <div className="flex items-center justify-center w-full min-h-screen bg-slate-100 relative overflow-hidden" style={{ fontFamily: "'Share Tech', sans-serif", backgroundImage: 'linear-gradient(rgba(59, 130, 246, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(59, 130, 246, 0.05) 1px, transparent 1px)', backgroundSize: '20px 20px' }}>
             <style>{`
                 @import url('https://fonts.googleapis.com/css2?family=Share+Tech&display=swap');
             `}</style>
