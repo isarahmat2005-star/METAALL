@@ -207,7 +207,7 @@ const extractDataJIT = async (fileItem, numFrames, signal) => {
               ctx.fillStyle = '#f1f5f9'; ctx.fillRect(0, 0, canvas.width, canvas.height);
               ctx.fillStyle = '#475569'; ctx.font = 'bold 24px sans-serif';
               ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-              ctx.fillText(ext.toUpperCase() + ' VECTOR', 200, 200);
+              ctx.fillText(ext.toUpperCase(), 200, 200);
               resolve({ frames: [canvas.toDataURL('image/jpeg', 0.85)], isTransparent: false });
               cleanup();
               return;
@@ -661,7 +661,7 @@ export default function App() {
       ext === 'svg' || 
       ext === 'eps' || 
       ext === 'ai';
-    const mediaType = isVectorMode ? 'vektor' : isVid ? 'video' : 'gambar/foto';
+    const mediaType = isVid ? 'video' : 'gambar/foto';
     
     const adobeCats = ADOBE_CATEGORIES.map(c => c.en).join(', ');
     const shutterCats = isVid ? SHUTTERSTOCK_VIDEO_CATEGORIES.map(c => c.en).join(', ') : SHUTTERSTOCK_IMAGE_VECTOR_CATEGORIES.map(c => c.en).join(', ');
