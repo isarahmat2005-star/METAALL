@@ -1244,7 +1244,7 @@ Kembalikan seluruh data JSON (English, Indonesia, & Mandarin) secara lengkap dan
 
             <div className={`flex flex-col items-center justify-center w-full max-w-sm px-4 z-10 transition-all duration-500 ${loginState === 'success' ? 'opacity-0 scale-110' : 'opacity-100 scale-100'}`}>
                 <div className="w-full bg-white p-6 rounded-lg border border-slate-200 shadow-md flex flex-col gap-4 relative z-10">
-                    <h2 className="text-center text-slate-800 m-0 font-bold text-2xl tracking-widest uppercase mb-1">METAALL</h2>
+                    <h2 className="text-center text-slate-800 m-0 font-bold text-2xl tracking-widest uppercase mb-1"></h2>
                     <input type="email" value={loginEmail} onChange={e => setLoginEmail(e.target.value)} onKeyDown={e => e.key === 'Enter' && handleLogin()} className="w-full p-3 rounded-lg bg-white border border-slate-300 text-slate-800 font-bold text-center outline-none transition-all h-12 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:opacity-50 disabled:bg-slate-100" placeholder="MASUKKAN EMAIL" disabled={loginState === 'loading' || loginState === 'success'} />
                     <button onClick={handleLogin} disabled={loginState === 'loading' || loginState === 'success'} className="bg-slate-800 text-white p-3 text-base font-bold rounded-lg cursor-pointer shadow-sm transition hover:bg-slate-900 disabled:opacity-50">
                         {loginState === 'loading' ? 'MEMPROSES...' : 'LOGIN'}
