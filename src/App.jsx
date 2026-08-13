@@ -383,7 +383,7 @@ export default function App() {
   const defaultCsvOrJson = isBackupMode ? 'metaall_backup' : isZipMode ? 'metaall_zip' : `metaall_${platform.replace(/\s+/g, '').toLowerCase()}`;
   
   const defaultSettings = {
-    titleLength: 70, keywordCount: 40, workerCount: 5, workerDelay: 3, frameCount: 3,
+    titleLength: 70, keywordCount: 40, workerCount: 5, workerDelay: 5, frameCount: 3,
     csvFilename: '', customInstructions: '', negativeMetadata: DEFAULT_NEGATIVE
   };
 
@@ -1484,8 +1484,7 @@ Kembalikan seluruh data JSON (English, Indonesia, & Mandarin) secara lengkap dan
                 <div className="flex items-center gap-3">
                     <button disabled={currentPage === 1} onClick={() => {setCurrentPage(p => p - 1); setPageInput(String(currentPage - 1));}} className="p-1 rounded bg-slate-100 hover:bg-slate-200 disabled:opacity-50 border border-slate-200 transition"><ChevronLeftIcon /></button>
                     <div className="flex items-center gap-2">
-                        <input type="text" value={pageInput} onChange={handlePageInputChange} onKeyDown={handlePageInputKeyDown} className="w-12 h-7 text-center border border-slate-300 rounded text-xs font-bold text-slate-700 focus:border-blue-500 outline-none transition-colors" />
-                        <span className="text-xs font-bold text-slate-500">/ {totalPages || 1}</span>
+                        <span className="text-sm font-bold text-slate-700 tracking-widest">{`<[${currentPage}/${totalPages || 1}]>`}</span>
                     </div>
                     <button disabled={currentPage === totalPages || totalPages === 0} onClick={() => {setCurrentPage(p => p + 1); setPageInput(String(currentPage + 1));}} className="p-1 rounded bg-slate-100 hover:bg-slate-200 disabled:opacity-50 border border-slate-200 transition"><ChevronRightIcon /></button>
                 </div>
@@ -1511,7 +1510,7 @@ Kembalikan seluruh data JSON (English, Indonesia, & Mandarin) secara lengkap dan
                           <LangIcon />
                           <span className="text-[10px] font-bold uppercase tracking-tight truncate">{f.displayLang}</span>
                         </button>
-                        <button disabled={isAppLocked || isZipping} onClick={() => promptRemoveFile(f.id)} className="flex flex-row items-center justify-center gap-1.5 py-1.5 rounded border bg-white border-blue-200 text-red-500 hover:bg-red-50 hover:border-red-200 transition-colors disabled:opacity-40 disabled:cursor-not-allowed" title="Delete File">
+                        <button disabled={isAppLocked || isZipping || f.status === 'pending' || f.status === 'processing'} onClick={() => promptRemoveFile(f.id)} className="flex flex-row items-center justify-center gap-1.5 py-1.5 rounded border bg-white border-blue-200 text-red-500 hover:bg-red-50 hover:border-red-200 transition-colors disabled:opacity-40 disabled:cursor-not-allowed" title="Delete File">
                           <TrashIcon />
                           <span className="text-[10px] font-bold uppercase tracking-tight truncate">Del</span>
                         </button>
