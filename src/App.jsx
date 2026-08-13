@@ -1484,7 +1484,7 @@ Kembalikan seluruh data JSON (English, Indonesia, & Mandarin) secara lengkap dan
                 <div className="flex items-center gap-3">
                     <button disabled={currentPage === 1} onClick={() => {setCurrentPage(p => p - 1); setPageInput(String(currentPage - 1));}} className="p-1 rounded bg-slate-100 hover:bg-slate-200 disabled:opacity-50 border border-slate-200 transition"><ChevronLeftIcon /></button>
                     <div className="flex items-center gap-2">
-                        <span className="text-sm font-bold text-slate-700 tracking-widest">{`<[${currentPage}/${totalPages || 1}]>`}</span>
+                        <span className="text-sm font-bold text-slate-700 tracking-widest">{currentPage} / {totalPages || 1}</span>
                     </div>
                     <button disabled={currentPage === totalPages || totalPages === 0} onClick={() => {setCurrentPage(p => p + 1); setPageInput(String(currentPage + 1));}} className="p-1 rounded bg-slate-100 hover:bg-slate-200 disabled:opacity-50 border border-slate-200 transition"><ChevronRightIcon /></button>
                 </div>
