@@ -1527,7 +1527,7 @@ Kembalikan seluruh data JSON (English, Indonesia, & Mandarin) secara lengkap dan
                         <div className="flex-1 overflow-x-hidden overflow-y-auto break-words custom-scroll flex flex-col gap-2.5 text-[11px] leading-snug whitespace-normal border border-blue-200 bg-blue-50/10 rounded p-1.5 relative">
                           {f.status === 'done' ? (
                             <>
-                              <div className={isAdobe || isDream || isArab || isBackupMode || isZipMode || isVcg ? 'text-blue-600' : 'text-slate-500'}>
+                              <div className={isAdobe || isDream || isArab || isBackupMode || isZipMode || isVcg || isMiri ? 'text-blue-600' : 'text-slate-500'}>
                                 <div className="text-[9px] font-bold mb-0.5 flex items-center gap-1 uppercase tracking-widest opacity-80">
                                   Title
                                   <button onClick={() => handleCopyClick(f.displayLang === 'EN' ? f.metadata.title_en : f.displayLang === 'ID' ? f.metadata.title_id : f.metadata.title_zh, `${f.id}-title`)} className={`transition-colors ${copiedId === `${f.id}-title` ? 'text-blue-500 scale-110' : 'text-inherit hover:opacity-70'}`} title="Salin Title"><CopyIcon /></button>
