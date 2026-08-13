@@ -684,7 +684,7 @@ PANTANGAN MUTLAK: DILARANG KERAS menggunakan kata 'AI', 'generative', 'generate'
 
 Aturan Ketat (Wajib Diikuti 100%):
 1. Judul & Deskripsi: Panjang WAJIB disekitar batas ${settings.titleLength} karakter.
-2. Deskripsi: Singkat, padat, komersial.
+2. Deskripsi: Singkat, padat, komersial, minimal 5 kata.
 3. Keyword: WAJIB berjumlah tepat ${settings.keywordCount} buah, dipisah koma dan spasi (keyword1, keyword2, keyword3). SETIAP KEYWORD HANYA BOLEH 1 KATA. Jika ada tanda hubung "-", hilangkan menjadi spasi (contoh: "non-aktif" dipisah jadi "non aktif").
 4. SEO Visual: Buat metadata SANGAT SEO. Tepat SETENGAH dari total keyword (sekitar ${Math.floor(settings.keywordCount / 2)} keyword) WAJIB murni mendeskripsikan elemen visual utama pada gambar/video ini untuk optimasi pencarian yang kuat.
 5. Kategori Adobe: Pilih TEPAT 1 dari: [${adobeCats}].
@@ -1444,7 +1444,7 @@ Kembalikan seluruh data JSON (English, Indonesia, & Mandarin) secara lengkap dan
                           className={`flex-1 text-xs font-bold rounded-lg border shadow transition-colors flex items-center justify-center gap-2 uppercase tracking-wide truncate ${canGenerate ? 'bg-blue-600 hover:bg-blue-700 text-white border-blue-700 hover:-translate-y-0.5 duration-200' : 'bg-slate-100 border-slate-200 cursor-not-allowed text-slate-400'}`}
                       >
                           <Wand2Icon className="w-3 h-3" />
-                          <span className="truncate">Generate Metadata</span>
+                          <span className="truncate">Generate</span>
                       </button>
                   )}
 
