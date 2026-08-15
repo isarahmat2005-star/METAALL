@@ -695,18 +695,19 @@ PENGECUALIAN (OVERRIDE LARANGAN DI ATAS): Jika elemen sensitif (senjata, rokok, 
 </pantangan_mutlak>
 
 <aturan_ketat_metadata>
-1. Judul (Title): Gunakan angka ${settings.titleLength} karakter sebagai acuan panjang maksimal. Terapkan formula PITCH: [Subject] + [Action/Situation] + [Context/Concept] + [Environment]. DILARANG diawali kata sandang (A, An, The). DILARANG menggunakan kata subjektif/filler (amazing, beautiful, nice, cool, trendy). DILARANG menyebut merek atau nama spesifik. 
-   * CONTOH BURUK: "Woman sitting at desk with laptop"
-   * CONTOH BAIK: "Businesswoman working remotely from home office, planning schedule with laptop"
+1. Judul (Title): Gunakan angka ${settings.titleLength} karakter sebagai acuan panjang maksimal. Terapkan formula PITCH: [Subject] + [Action/Situation] + [Context/Concept] + [Environment]. 
+   - DILARANG diawali kata sandang (A, An, The) dan kata subjektif/filler (amazing, beautiful).
+   - JANGAN gunakan pola kalimat repetitif kaku (misal: "[Objek] icon representing [Konsep]" atau "[Objek] with [Simbol]"). Variasikan struktur kalimat pembuka secara dinamis!
 
-2. Deskripsi (Description): Gunakan angka ${settings.titleLength} sebagai estimasi panjang rata-rata. WAJIB MINIMAL 5 KATA. Faktual: [Subjek] + [Aksi] + [Lokasi/Konteks]. Variasikan struktur kalimat awal, JANGAN gunakan pola kaku atau template berulang seperti 'Close-up of...' atau 'A picture of...'.
+2. Deskripsi (Description): Gunakan angka ${settings.titleLength} sebagai estimasi panjang rata-rata. WAJIB MINIMAL 5 KATA. Faktual: [Subjek] + [Aksi] + [Lokasi/Konteks]. 
+   - HINDARI awalan monoton atau template identik seperti 'Solid black icon...', 'Close-up of...', atau 'Isolated black...'. Gunakan sudut pandang deskripsi yang variatif.
 
 3. Keyword (Inggris & Indonesia):
    - Berjumlah TEPAT ${settings.keywordCount} buah, dipisah koma dan spasi.
-   - Susun 25% keyword berbobot komersial tinggi di urutan PERTAMA (front-loaded). Variasikan frasa/sinonim komersial dari kata utama di Judul ke dalam bagian awal ini.
-   - DILARANG KERAS keyword stuffing (memasukkan sinonim yang 100% identik seperti car, auto, automobile sekaligus).
-   - Utamakan bentuk TUNGGAL (singular). IZINKAN frasa 2 kata komersial (contoh: copy space, flat lay, business meeting).
-   - Dilarang menggunakan tanda hubung "-". Pisahkan dengan spasi biasa.
+   - FRONT-LOADED: Susun 25% keyword berbobot komersial tinggi di urutan PERTAMA.
+   - WAJIB masukkan minimal 3 kata benda utama dari Judul ke dalam 10 keyword pertama.
+   - RELEVANSI KETAT: Seluruh keyword (hingga urutan terakhir) WAJIB berhubungan langsung dengan visual/konsep. DILARANG menggunakan asosiasi abstrak yang terlalu jauh (contoh: dilarang memakai 'fiscal policy' hanya karena gambarnya koin).
+   - Utamakan bentuk TUNGGAL (singular). IZINKAN frasa 2 kata komersial (contoh: copy space, flat lay). Dilarang menggunakan tanda hubung "-". Pisahkan dengan spasi biasa.
 
 4. Kategori Adobe: Pilih TEPAT 1 dari: [${adobeCats}].
 5. Kategori Shutterstock: WAJIB pilih TEPAT 2 dari: [${shutterCats}]. Pisahkan dengan koma. TIDAK BOLEH KOSONG.
@@ -714,15 +715,20 @@ PENGECUALIAN (OVERRIDE LARANGAN DI ATAS): Jika elemen sensitif (senjata, rokok, 
 7. MiriCanvas: 'miricanvas_type' (Pilih hanya "Photo" atau "Background" jika media adalah gambar. Pilih "Video" jika media adalah video). Atur 'miricanvas_tier' ke 'Premium' KECUALI user meminta 'Standard'.
 
 8. Metadata Mandarin (500px/VCG):
-   - category_vcg: Pilih TEPAT 1 (bahasa Mandarin) dari: [${vcgCats}]. JIKA INI VIDEO, WAJIB diisi dengan string kosong "".
-   - keywords_zh: Maksimal 35 KATA/BUAH FRASA (词), BUKAN 35 karakter. 
-   - Gunakan Hanzi Sederhana (Simplified Chinese).
-   - Utamakan frasa 2-4 karakter (词组). DILARANG terjemahan harfiah kata-per-kata. 
-   - WAJIB gunakan terminologi industri Tiongkok (Contoh: "copy space" = 留白, "flat lay" = 俯拍/平铺, "business" = 商务).
-   - Pisahkan frasa Mandarin dengan spasi tunggal, TANPA koma atau simbol.
+   - category_vcg: Pilih TEPAT 1 (bahasa Mandarin) dari: [${vcgCats}]. JIKA RAGU atau tidak ada konsep yang pas, prioritaskan kategori yang mendeskripsikan BENTUK VISUAL objek (misal: '极简抽象' / Minimalist Abstract), BUKAN tema konseptual yang salah (misal: makanan/still life). JIKA INI VIDEO, WAJIB diisi dengan string kosong "".
+   - keywords_zh: Maksimal 35 KATA/BUAH FRASA (词), BUKAN 35 karakter. Gunakan Hanzi Sederhana. Utamakan frasa 2-4 karakter (词组).
+   - WAJIB gunakan terminologi industri Tiongkok (Contoh: "copy space" = 留白). Pisahkan frasa dengan spasi tunggal, TANPA koma atau simbol.
 
 9. Output: TIGA BAHASA (Inggris, Indonesia, & Mandarin / Simplified Chinese) dalam JSON.${transparentInstruction}
-</aturan_ketat_metadata>`;
+</aturan_ketat_metadata>
+
+<self_check>
+SEBELUM MENGEMBALIKAN JSON, LAKUKAN PENGECEKAN DALAM PIKIRAN ANDA:
+- Apakah 3 kata utama dari Judul benar-benar ada di 10 keyword pertama? Jika tidak, perbaiki susunannya.
+- Apakah ada keyword di bagian akhir list yang asosiasinya terlalu jauh/mengada-ada? Jika ada, ganti dengan yang relevan secara visual.
+- Apakah Kategori VCG sudah akurat secara visual dan BUKAN halusinasi konseptual?
+- Apakah struktur Judul dan Deskripsi sudah dinamis dan tidak mengandalkan pola "[Objek] icon with..."?
+</self_check>`;
 
     let parts = [{ text: promptText }];
     frames.forEach(frame => {
