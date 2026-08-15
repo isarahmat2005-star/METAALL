@@ -747,10 +747,10 @@ PENGECUALIAN (OVERRIDE LARANGAN DI ATAS): Jika elemen sensitif benar-benar terli
 7. MiriCanvas: Sesuaikan 'miricanvas_type' secara logis dengan medianya. Jika foto nyata (Photo/Background), jika ilustrasi/vektor (SVG/PNG element), jika video (Video). Atur 'miricanvas_tier' ke 'Premium' KECUALI user meminta 'Standard'.
 
 8. Metadata Mandarin (500px/VCG):
-   - title_zh & description_zh: Terjemahkan hasil dari Rule 1 & 2 ke Mandarin yang luwes. DILARANG KERAS terjemahan harfiah yang kaku.
+   - title_zh & description_zh: JANGAN terjemahkan struktur kalimat Inggris kata-per-kata. Susun ULANG sebagai kalimat Mandarin natural dari nol — boleh berbeda urutan klausa, boleh gabungkan/pisah frasa — selama makna dan objek intinya tetap sama. Bayangkan Anda seorang copywriter Tiongkok menulis metadata ini dari awal, BUKAN menerjemahkan.
    - category_vcg: Pilih TEPAT 1 (Mandarin) dari: [${vcgCats}]. Prioritaskan BENTUK VISUAL/FISIK jika ragu. DILARANG menebak tema konseptual yang tidak berwujud. JIKA INI VIDEO, WAJIB diisi dengan string kosong "".
    - keywords_zh: Maksimal 35 KATA/BUAH FRASA (词). Gunakan Hanzi Sederhana. WAJIB patuhi SISTEM TIER dan REGULASI FRASA pada Aturan No 3. WAJIB menggunakan terminologi industri desain dan fotografi standar Tiongkok yang lazim digunakan oleh pembeli lokal. Pisahkan frasa dengan spasi tunggal, TANPA koma atau simbol.
-
+   
 9. Output: TIGA BAHASA (Inggris, Indonesia, Mandarin) dalam JSON.${transparentInstruction}
 </aturan_ketat_metadata>
 
