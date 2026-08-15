@@ -677,7 +677,6 @@ export default function App() {
         : "";
 
     // --- LOGIKA DETERMINISTIK PEMILIHAN FORMULA ---
-    // Mengubah nama file menjadi angka unik (Polynomial Hash) untuk penentuan formula
     const getHash = (str) => {
       let hash = 0;
       for (let i = 0; i < str.length; i++) {
@@ -687,27 +686,31 @@ export default function App() {
     };
     const fileHash = getHash(fileItem.file.name);
 
-    // 3 Variasi Struktur Judul
+    // 5 Variasi Struktur Judul (Diperluas dengan fokus pada detail mikro)
     const titleFormulas = [
-      "[Subjek Visual] + [Aksi/Kondisi] + [Lingkungan/Konteks]",
-      "[Konteks Konsep/Tema] + [Subjek Visual] + [Aksi/Detail]",
-      "[Gaya Visual/Komposisi] + [Subjek Visual] + [Konteks/Tujuan]"
+      "[Subjek Visual Utama] + [Aksi/Kondisi] + [Lingkungan/Konteks]",
+      "[Konteks Konsep/Tema] + [Subjek Visual] + [Detail Mikro Visual]",
+      "[Gaya Visual/Komposisi] + [Subjek Visual] + [Konteks/Tujuan]",
+      "[Fokus Detail Mikro] + [Subjek Visual] + [Gaya/Warna Dominan]",
+      "[Target Industri/Penggunaan] + [Subjek Visual] + [Kondisi Spesifik]"
     ];
-    const assignedTitleFormula = titleFormulas[fileHash % 3];
+    const assignedTitleFormula = titleFormulas[fileHash % 5];
 
-    // 4 Variasi Struktur Deskripsi (Tanpa Basa-Basi)
+    // 6 Variasi Struktur Deskripsi (Tanpa Basa-Basi)
     const descFormulas = [
       "Mulai langsung dengan penjelasan komposisi latar atau gaya visual, lalu sebutkan objek utamanya.",
       "Mulai langsung dengan menyebutkan objek utama beserta detail fisiknya, lalu jelaskan konteks atau aktivitasnya.",
       "Mulai langsung dengan menyoroti detail visual sekunder atau warna dominan, lalu hubungkan dengan objek utamanya.",
-      "Mulai langsung dengan menyebutkan sudut pandang atau kontras visual, lalu jelaskan wujud objek utamanya."
+      "Mulai langsung dengan menyebutkan sudut pandang atau kontras visual, lalu jelaskan wujud objek utamanya.",
+      "Mulai langsung dengan menyoroti elemen mikro (contoh: ketebalan garis, bayangan, bentuk spesifik), lalu gabungkan dengan utilitas objek.",
+      "Mulai langsung dengan fokus pada estetika atau mood visual aset, lalu sebutkan subjek utamanya secara lugas."
     ];
-    const assignedDescFormula = descFormulas[fileHash % 4];
+    const assignedDescFormula = descFormulas[fileHash % 6];
     // ----------------------------------------------
 
     const promptText = `Anda adalah Art Director senior dan kurator metadata microstock profesional. Sebelum membuat metadata, tembus 4 LAPIS ANALISIS VISUAL berikut: 
-1. Fisik (Objek utama) 
-2. Aktivitas (Apa yang terjadi) 
+1. Fisik Makro (Objek utama & wujud besar)
+2. Fisik Mikro (Gali detail unik JIKA ADA: bentuk pegangan, ketebalan garis, sudut, tekstur, celah) 
 3. Konsep (Pesan/emosi yang dibawa) 
 4. Utilitas/Desain (Cara pakai).
 
@@ -727,7 +730,7 @@ PENGECUALIAN (OVERRIDE LARANGAN DI ATAS): Jika elemen sensitif benar-benar terli
 1. Judul (Title): Gunakan angka ${settings.titleLength} karakter sebagai acuan panjang maksimal. 
    - DILARANG diawali kata sandang bahasa Inggris. DILARANG menggunakan kata sifat hiperbola atau opini subjektif yang tidak berwujud fisik.
    - BUYER-INTENT: Judul wajib berorientasi komersial dengan menyebutkan solusi, konsep industri, atau target kegunaan aset, bukan sekadar deskripsi objek buta.
-   - FORMULA JUDUL WAJIB UNTUK GAMBAR INI: Anda TIDAK BOLEH MEMILIH. Anda WAJIB menggunakan struktur ini: "${assignedTitleFormula}".
+   - FORMULA JUDUL WAJIB UNTUK GAMBAR INI: Anda TIDAK BOLEH MEMILIH. Anda WAJIB menggunakan struktur ini: "${assignedTitleFormula}". JIKA gambar memiliki detail fisik mikro yang benar-benar terlihat (pegangan, aksen sudut, tekstur, celah), gunakan untuk memperkaya variasi kata. JIKA gambar terlalu simpel/flat tanpa detail mikro nyata, JANGAN MENGARANG — gunakan variasi dari Konteks Konsep atau Gaya Visual saja.
 
 2. Deskripsi (Description): Gunakan angka ${settings.titleLength} sebagai estimasi panjang rata-rata. WAJIB MINIMAL 5 KATA.
    - ZERO-CLICHE RULE: DILARANG KERAS menggunakan klausa basa-basi, kata sambutan, atau frasa pengantar abstrak di awal kalimat (seperti kata "Ideal untuk", "Menampilkan", "Gambar ini merepresentasikan").
@@ -736,7 +739,7 @@ PENGECUALIAN (OVERRIDE LARANGAN DI ATAS): Jika elemen sensitif benar-benar terli
 3. Keyword (Inggris & Indonesia):
    - Berjumlah TEPAT ${settings.keywordCount} buah, dipisah koma dan spasi.
    - SISTEM TIER (GRADASI BOBOT):
-     * Tier 1 (Urutan 1-10): MURNI FISIK & VISUAL. Hanya objek nyata, warna, dan gaya. Inti subjek Judul WAJIB masuk di sini. UJI LOGIKA EKSTREM: Jika kata tersebut tidak bisa disentuh atau difoto wujudnya secara harfiah (misal kata yang melambangkan konsep abstrak atau industri), DILARANG KERAS masuk ke urutan 1-10!
+     * Tier 1 (Urutan 1-10): MURNI FISIK & VISUAL. Hanya objek nyata, detail mikro (jika ada), warna, dan gaya. Inti subjek Judul WAJIB masuk di sini. UJI LOGIKA EKSTREM: Jika kata tersebut tidak bisa disentuh atau difoto wujudnya secara harfiah (misal kata yang melambangkan konsep abstrak atau industri), DILARANG KERAS masuk ke urutan 1-10!
      * Tier 2 (Urutan 11-25): KONSEP SPESIFIK & AKSI. WAJIB spesifik pada makna UNIK gambar ini! HINDARI kata konsep generik yang dipukul rata untuk semua gambar yang kebetulan bertema sama.
      * Tier 3 (Urutan 26-akhir): KATEGORI PAYUNG. Industri atau tema luas.
    - REGULASI FRASA: Maksimal HANYA 15% dari total keyword yang boleh berupa frasa 2 kata, dan HANYA DIKHUSUSKAN untuk istilah industri komersial baku yang maknanya akan rusak jika dipisah. Sisa keyword WAJIB dipisah menjadi kata tunggal (singular). Dilarang keras membuat frasa penggabungan deskriptif yang terdiri dari kata sifat dan kata benda umum, wajib dipecah. Dilarang pakai tanda hubung "-".
@@ -747,19 +750,19 @@ PENGECUALIAN (OVERRIDE LARANGAN DI ATAS): Jika elemen sensitif benar-benar terli
 7. MiriCanvas: Sesuaikan 'miricanvas_type' secara logis dengan medianya. Jika foto nyata (Photo/Background), jika ilustrasi/vektor (SVG/PNG element), jika video (Video). Atur 'miricanvas_tier' ke 'Premium' KECUALI user meminta 'Standard'.
 
 8. Metadata Mandarin (500px/VCG):
-   - title_zh & description_zh: JANGAN terjemahkan struktur kalimat Inggris kata-per-kata. Susun ULANG sebagai kalimat Mandarin natural dari nol — boleh berbeda urutan klausa, boleh gabungkan/pisah frasa — selama makna dan objek intinya tetap sama. Bayangkan Anda seorang copywriter Tiongkok menulis metadata ini dari awal, BUKAN menerjemahkan.
+   - title_zh & description_zh: JANGAN terjemahkan struktur kalimat Inggris kata-per-kata. Susun ULANG sebagai kalimat Mandarin natural dari nol. PENTING: title_zh WAJIB hanya memuat elemen yang SAMA PERSIS dengan title_en, JANGAN menambahkan detail yang hanya ada di deskripsi.
    - category_vcg: Pilih TEPAT 1 (Mandarin) dari: [${vcgCats}]. Prioritaskan BENTUK VISUAL/FISIK jika ragu. DILARANG menebak tema konseptual yang tidak berwujud. JIKA INI VIDEO, WAJIB diisi dengan string kosong "".
-   - keywords_zh: Maksimal 35 KATA/BUAH FRASA (词). Gunakan Hanzi Sederhana. WAJIB patuhi SISTEM TIER dan REGULASI FRASA pada Aturan No 3. WAJIB menggunakan terminologi industri desain dan fotografi standar Tiongkok yang lazim digunakan oleh pembeli lokal. Pisahkan frasa dengan spasi tunggal, TANPA koma atau simbol.
-   
+   - keywords_zh: Maksimal 35 KATA/BUAH FRASA (词). Gunakan Hanzi Sederhana. WAJIB patuhi SISTEM TIER dan REGULASI FRASA pada Aturan No 3 secara ketat. PENTING: keywords_zh WAJIB tunduk pada Uji Logika Ekstrem yang sama seperti Rule #3 (kata abstrak/tidak berwujud fisik mutlak DILARANG di posisi 1-10). WAJIB menggunakan terminologi industri desain/fotografi Tiongkok. Pisahkan frasa dengan spasi tunggal, TANPA koma atau simbol.
+
 9. Output: TIGA BAHASA (Inggris, Indonesia, Mandarin) dalam JSON.${transparentInstruction}
 </aturan_ketat_metadata>
 
 <self_check>
 SEBELUM MENGEMBALIKAN JSON, LAKUKAN PENGECEKAN TERTUTUP:
-- Apakah Anda 100% mematuhi Formula Judul dan Deskripsi yang ditugaskan?
-- Apakah Deskripsi Anda masih menggunakan frasa basa-basi abstrak di awal? Jika YA, HAPUS pengantarnya!
-- Apakah urutan 1-10 pada keyword berisi kata abstrak yang tidak bisa disentuh/difoto? Jika YA, pindahkan ke Tier 2 atau Tier 3!
-- Apakah Anda terlalu banyak menggunakan frasa 2 kata? Pecah frasa deskriptif generik menjadi kata tunggal!
+- Apakah Anda 100% mematuhi Formula Judul dan Deskripsi yang ditugaskan secara spesifik?
+- Apakah "detail mikro" yang disebutkan di judul/keyword BENAR-BENAR terlihat di gambar, atau hanya dikarang untuk memenuhi kuota variasi? Jika mengarang/halusinasi, hapus dan ganti dengan elemen yang benar-benar nyata!
+- Apakah urutan 1-10 pada keyword (termasuk keywords_zh Mandarin) berisi kata abstrak yang tidak bisa disentuh/difoto? Jika YA, pindahkan ke Tier 2 atau Tier 3!
+- Apakah title_zh Mandarin menambahkan objek visual yang tidak disebutkan di title_en? Jika YA, hapus agar konsisten!
 - Apakah kata-kata konseptual (Tier 2) sudah benar-benar spesifik secara unik untuk gambar ini?
 </self_check>`;
 
