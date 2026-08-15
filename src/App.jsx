@@ -686,7 +686,7 @@ export default function App() {
 Media Type: ${mediaType}
 Filename: "${fileItem.file.name}"
 Instruksi Tambahan User: ${settings.customInstructions ? settings.customInstructions : '-'}
-(PENTING: Jika merujuk pada Kategori dengan Angka ID, cocokkan dengan daftar: [${dreamCatsMap}]. Kembalikan HANYA TEKS NAMA KATEGORI, BUKAN ID).
+(PENTING: Jika merujuk pada Kategori dengan Angka ID, kembalikan HANYA TEKS NAMA KATEGORI, BUKAN ID dari referensi daftar ini: [${dreamCatsMap}]).
 </context>
 
 <pantangan_mutlak>
@@ -696,32 +696,32 @@ PENGECUALIAN (OVERRIDE LARANGAN DI ATAS): Jika elemen sensitif benar-benar terli
 
 <aturan_ketat_metadata>
 1. Judul (Title): Gunakan angka ${settings.titleLength} karakter sebagai acuan panjang maksimal. 
-   - DILARANG diawali kata sandang. DILARANG KERAS menggunakan kata sifat hiperbola, opini, atau penilaian estetika yang tidak bisa dibuktikan secara wujud visual.
-   - VARIASI STRUKTUR JUDUL (WAJIB ACAK): Pilih SECARA ACAK HANYA SATU dari 3 formula ini:
-     a) [Subjek] + [Aksi/Kondisi] + [Lingkungan]
-     b) [Konteks Konsep/Tema] + [Subjek] + [Aksi]
-     c) [Gaya Visual] + [Subjek] + [Konteks]
+   - DILARANG diawali kata sandang bahasa Inggris. DILARANG menggunakan kata sifat hiperbola atau opini subjektif yang tidak berwujud fisik.
+   - BUYER-INTENT: Judul wajib berorientasi komersial dengan menyebutkan solusi, konsep industri, atau target kegunaan aset, bukan sekadar deskripsi objek buta.
+   - STRUKTUR BERBASIS VISUAL (Pilih formula secara dinamis sesuai jenis gambar agar tidak repetitif):
+     a) Jika fokus pada Orang/Aksi: [Subjek] + [Aksi/Kondisi] + [Lingkungan]
+     b) Jika fokus pada Ikon/Objek Diam: [Konteks Konsep/Tema] + [Subjek] + [Detail]
+     c) Jika fokus pada Latar Belakang/Grafis: [Gaya Visual] + [Bentuk/Pola] + [Konteks]
 
 2. Deskripsi (Description): Gunakan angka ${settings.titleLength} sebagai estimasi panjang rata-rata. WAJIB MINIMAL 5 KATA.
-   - ZERO-INTRO RULE (TANPA BASA-BASI): DILARANG KERAS menggunakan klausa pengantar, kata sambutan, atau frasa penjelas fungsi di awal kalimat.
-   - WAJIB langsung dimulai dengan penyebutan objek visual utamanya secara faktual beserta susunan komposisinya.
-   - Variasikan struktur kalimat dan kosa kata agar tidak identik dengan Judul.
+   - ZERO-CLICHE RULE: DILARANG KERAS menggunakan klausa basa-basi, kata sambutan, atau frasa pengantar abstrak di awal kalimat.
+   - VARIASI AWALAN: Jangan selalu memulai kalimat dengan penyebutan objek utama agar tidak tercipta pola template baru. Variasikan awalan secara acak: bisa dimulai dari penjabaran komposisi latar, detail visual sekunder, atau nuansa warna dominan, sebelum menyebutkan objek utama.
 
 3. Keyword (Inggris & Indonesia):
    - Berjumlah TEPAT ${settings.keywordCount} buah, dipisah koma dan spasi.
    - SISTEM TIER (GRADASI BOBOT):
-     * Tier 1 (Urutan 1-10): MURNI FISIK & VISUAL. Hanya berisi objek nyata, warna, dan gaya visual yang terlihat. Inti subjek dari Judul WAJIB ada di sini.
-     * Tier 2 (Urutan 11-25): KONSEP & AKSI. Berisi pesan, fungsi, atau aktivitas spesifik yang tergambar jelas.
+     * Tier 1 (Urutan 1-10): MURNI FISIK & VISUAL. Hanya objek nyata, warna, dan gaya. Inti subjek Judul WAJIB masuk di sini.
+     * Tier 2 (Urutan 11-25): KONSEP SPESIFIK & AKSI. WAJIB spesifik pada makna UNIK gambar ini! HINDARI kata konsep generik yang dipukul rata untuk semua gambar yang kebetulan bertema sama.
      * Tier 3 (Urutan 26-akhir): KATEGORI PAYUNG. Industri atau tema luas.
-   - REGULASI FRASA: Maksimal HANYA 15% dari total keyword yang boleh berupa frasa 2 kata, dan HANYA DIKHUSUSKAN untuk istilah komersial baku yang maknanya akan hilang atau berubah jika dipisah. Sisa keyword WAJIB dipisah menjadi kata tunggal (singular). Dilarang membuat frasa dari penggabungan kata sifat dan kata benda umum, wajib dipecah. Dilarang menggunakan tanda hubung "-".
+   - REGULASI FRASA: Maksimal HANYA 15% dari total keyword yang boleh berupa frasa 2 kata, dan HANYA DIKHUSUSKAN untuk istilah industri komersial baku yang maknanya akan rusak jika dipisah. Sisa keyword WAJIB dipisah menjadi kata tunggal (singular). Dilarang keras membuat frasa penggabungan deskriptif yang terdiri dari kata sifat dan kata benda umum, wajib dipecah. Dilarang pakai tanda hubung "-".
 
 4. Kategori Adobe: Pilih TEPAT 1 dari: [${adobeCats}]. 
 5. Kategori Shutterstock: WAJIB pilih TEPAT 2 dari: [${shutterCats}]. Pisahkan dengan koma. TIDAK BOLEH KOSONG.
-6. Kategori Dreamstime: WAJIB pilih TEPAT 3 dari: [${dreamCatsExact}]. (Pilih kategori berdasarkan elemen spesifik yang BENAR-BENAR TERLIHAT. Jangan asal menyamakan kategori dengan media lain kecuali subjeknya identik).
+6. Kategori Dreamstime: WAJIB pilih TEPAT 3 dari: [${dreamCatsExact}]. (Pilih kategori berdasarkan elemen fisik yang BENAR-BENAR TERLIHAT. Jangan asal menyamakan kategori dengan media lain kecuali subjek fisiknya identik).
 7. MiriCanvas: Sesuaikan 'miricanvas_type' secara logis dengan medianya. Jika foto nyata (Photo/Background), jika ilustrasi/vektor (SVG/PNG element), jika video (Video). Atur 'miricanvas_tier' ke 'Premium' KECUALI user meminta 'Standard'.
 
 8. Metadata Mandarin (500px/VCG):
-   - title_zh & description_zh: Terjemahkan hasil dari Rule 1 & 2 ke Mandarin yang luwes. DILARANG KERAS melakukan terjemahan harfiah yang kaku.
+   - title_zh & description_zh: Terjemahkan hasil dari Rule 1 & 2 ke Mandarin yang luwes. DILARANG KERAS terjemahan harfiah yang kaku.
    - category_vcg: Pilih TEPAT 1 (Mandarin) dari: [${vcgCats}]. Prioritaskan BENTUK VISUAL/FISIK jika ragu. DILARANG menebak tema konseptual yang tidak berwujud. JIKA INI VIDEO, WAJIB diisi dengan string kosong "".
    - keywords_zh: Maksimal 35 KATA/BUAH FRASA (词). Gunakan Hanzi Sederhana. WAJIB patuhi SISTEM TIER dan REGULASI FRASA pada Aturan No 3. WAJIB menggunakan terminologi industri desain dan fotografi standar Tiongkok yang lazim digunakan oleh pembeli lokal. Pisahkan frasa dengan spasi tunggal, TANPA koma atau simbol.
 
@@ -729,11 +729,12 @@ PENGECUALIAN (OVERRIDE LARANGAN DI ATAS): Jika elemen sensitif benar-benar terli
 </aturan_ketat_metadata>
 
 <self_check>
-SEBELUM MENGEMBALIKAN JSON, LAKUKAN PENGECEKAN:
-- Apakah Deskripsi dimulai dengan klausa basa-basi atau pengantar abstrak? Jika YA, HAPUS pengantarnya dan mulai langsung dari nama objek fisik!
+SEBELUM MENGEMBALIKAN JSON, LAKUKAN PENGECEKAN TERTUTUP:
+- Apakah Judul Anda sudah memiliki unsur Buyer-Intent komersial?
+- Apakah Deskripsi Anda dimulai dengan frasa basa-basi abstrak? Jika YA, HAPUS pengantarnya dan mulai langsung dari elemen visual!
 - Apakah 10 keyword pertama murni kata benda fisik/visual (bukan konsep abstrak)?
-- Apakah Anda terlalu banyak menggunakan frasa 2 kata? Pecah frasa penggabungan umum menjadi kata tunggal!
-- Apakah kategori VCG & Dreamstime didasarkan pada visual nyata dari gambar ini (bukan sekadar menebak konsep umum)?
+- Apakah Anda terlalu banyak menggunakan frasa 2 kata? Pecah frasa deskriptif generik menjadi kata tunggal!
+- Apakah kata-kata konseptual (Tier 2) sudah benar-benar spesifik secara unik untuk gambar ini?
 </self_check>`;
 
     let parts = [{ text: promptText }];
