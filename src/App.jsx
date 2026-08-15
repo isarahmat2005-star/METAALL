@@ -676,6 +676,35 @@ export default function App() {
         ? "\n\nATURAN MUTLAK PNG: Ini adalah gambar CUTOUT/TRANSPARAN. JANGAN gunakan keyword 'white background', 'isolated on white'. WAJIB GUNAKAN KEYWORD: 'transparent background', 'png', 'isolated', 'cutout', 'no background'." 
         : "";
 
+    // --- LOGIKA DETERMINISTIK PEMILIHAN FORMULA ---
+    // Mengubah nama file menjadi angka unik (Polynomial Hash) untuk penentuan formula
+    const getHash = (str) => {
+      let hash = 0;
+      for (let i = 0; i < str.length; i++) {
+        hash = (hash * 31 + str.charCodeAt(i)) | 0;
+      }
+      return Math.abs(hash);
+    };
+    const fileHash = getHash(fileItem.file.name);
+
+    // 3 Variasi Struktur Judul
+    const titleFormulas = [
+      "[Subjek Visual] + [Aksi/Kondisi] + [Lingkungan/Konteks]",
+      "[Konteks Konsep/Tema] + [Subjek Visual] + [Aksi/Detail]",
+      "[Gaya Visual/Komposisi] + [Subjek Visual] + [Konteks/Tujuan]"
+    ];
+    const assignedTitleFormula = titleFormulas[fileHash % 3];
+
+    // 4 Variasi Struktur Deskripsi (Tanpa Basa-Basi)
+    const descFormulas = [
+      "Mulai langsung dengan penjelasan komposisi latar atau gaya visual, lalu sebutkan objek utamanya.",
+      "Mulai langsung dengan menyebutkan objek utama beserta detail fisiknya, lalu jelaskan konteks atau aktivitasnya.",
+      "Mulai langsung dengan menyoroti detail visual sekunder atau warna dominan, lalu hubungkan dengan objek utamanya.",
+      "Mulai langsung dengan menyebutkan sudut pandang atau kontras visual, lalu jelaskan wujud objek utamanya."
+    ];
+    const assignedDescFormula = descFormulas[fileHash % 4];
+    // ----------------------------------------------
+
     const promptText = `Anda adalah Art Director senior dan kurator metadata microstock profesional. Sebelum membuat metadata, tembus 4 LAPIS ANALISIS VISUAL berikut: 
 1. Fisik (Objek utama) 
 2. Aktivitas (Apa yang terjadi) 
@@ -698,19 +727,16 @@ PENGECUALIAN (OVERRIDE LARANGAN DI ATAS): Jika elemen sensitif benar-benar terli
 1. Judul (Title): Gunakan angka ${settings.titleLength} karakter sebagai acuan panjang maksimal. 
    - DILARANG diawali kata sandang bahasa Inggris. DILARANG menggunakan kata sifat hiperbola atau opini subjektif yang tidak berwujud fisik.
    - BUYER-INTENT: Judul wajib berorientasi komersial dengan menyebutkan solusi, konsep industri, atau target kegunaan aset, bukan sekadar deskripsi objek buta.
-   - STRUKTUR BERBASIS VISUAL (Pilih formula secara dinamis sesuai jenis gambar agar tidak repetitif):
-     a) Jika fokus pada Orang/Aksi: [Subjek] + [Aksi/Kondisi] + [Lingkungan]
-     b) Jika fokus pada Ikon/Objek Diam: [Konteks Konsep/Tema] + [Subjek] + [Detail]
-     c) Jika fokus pada Latar Belakang/Grafis: [Gaya Visual] + [Bentuk/Pola] + [Konteks]
+   - FORMULA JUDUL WAJIB UNTUK GAMBAR INI: Anda TIDAK BOLEH MEMILIH. Anda WAJIB menggunakan struktur ini: "${assignedTitleFormula}".
 
 2. Deskripsi (Description): Gunakan angka ${settings.titleLength} sebagai estimasi panjang rata-rata. WAJIB MINIMAL 5 KATA.
-   - ZERO-CLICHE RULE: DILARANG KERAS menggunakan klausa basa-basi, kata sambutan, atau frasa pengantar abstrak di awal kalimat.
-   - VARIASI AWALAN: Jangan selalu memulai kalimat dengan penyebutan objek utama agar tidak tercipta pola template baru. Variasikan awalan secara acak: bisa dimulai dari penjabaran komposisi latar, detail visual sekunder, atau nuansa warna dominan, sebelum menyebutkan objek utama.
+   - ZERO-CLICHE RULE: DILARANG KERAS menggunakan klausa basa-basi, kata sambutan, atau frasa pengantar abstrak di awal kalimat (seperti kata "Ideal untuk", "Menampilkan", "Gambar ini merepresentasikan").
+   - FORMULA DESKRIPSI WAJIB UNTUK GAMBAR INI: Anda TIDAK BOLEH MEMILIH. Anda WAJIB mematuhi instruksi pembuka kalimat ini: "${assignedDescFormula}".
 
 3. Keyword (Inggris & Indonesia):
    - Berjumlah TEPAT ${settings.keywordCount} buah, dipisah koma dan spasi.
    - SISTEM TIER (GRADASI BOBOT):
-     * Tier 1 (Urutan 1-10): MURNI FISIK & VISUAL. Hanya objek nyata, warna, dan gaya. Inti subjek Judul WAJIB masuk di sini.
+     * Tier 1 (Urutan 1-10): MURNI FISIK & VISUAL. Hanya objek nyata, warna, dan gaya. Inti subjek Judul WAJIB masuk di sini. UJI LOGIKA EKSTREM: Jika kata tersebut tidak bisa disentuh atau difoto wujudnya secara harfiah (misal kata yang melambangkan konsep abstrak atau industri), DILARANG KERAS masuk ke urutan 1-10!
      * Tier 2 (Urutan 11-25): KONSEP SPESIFIK & AKSI. WAJIB spesifik pada makna UNIK gambar ini! HINDARI kata konsep generik yang dipukul rata untuk semua gambar yang kebetulan bertema sama.
      * Tier 3 (Urutan 26-akhir): KATEGORI PAYUNG. Industri atau tema luas.
    - REGULASI FRASA: Maksimal HANYA 15% dari total keyword yang boleh berupa frasa 2 kata, dan HANYA DIKHUSUSKAN untuk istilah industri komersial baku yang maknanya akan rusak jika dipisah. Sisa keyword WAJIB dipisah menjadi kata tunggal (singular). Dilarang keras membuat frasa penggabungan deskriptif yang terdiri dari kata sifat dan kata benda umum, wajib dipecah. Dilarang pakai tanda hubung "-".
@@ -730,9 +756,9 @@ PENGECUALIAN (OVERRIDE LARANGAN DI ATAS): Jika elemen sensitif benar-benar terli
 
 <self_check>
 SEBELUM MENGEMBALIKAN JSON, LAKUKAN PENGECEKAN TERTUTUP:
-- Apakah Judul Anda sudah memiliki unsur Buyer-Intent komersial?
-- Apakah Deskripsi Anda dimulai dengan frasa basa-basi abstrak? Jika YA, HAPUS pengantarnya dan mulai langsung dari elemen visual!
-- Apakah 10 keyword pertama murni kata benda fisik/visual (bukan konsep abstrak)?
+- Apakah Anda 100% mematuhi Formula Judul dan Deskripsi yang ditugaskan?
+- Apakah Deskripsi Anda masih menggunakan frasa basa-basi abstrak di awal? Jika YA, HAPUS pengantarnya!
+- Apakah urutan 1-10 pada keyword berisi kata abstrak yang tidak bisa disentuh/difoto? Jika YA, pindahkan ke Tier 2 atau Tier 3!
 - Apakah Anda terlalu banyak menggunakan frasa 2 kata? Pecah frasa deskriptif generik menjadi kata tunggal!
 - Apakah kata-kata konseptual (Tier 2) sudah benar-benar spesifik secara unik untuk gambar ini?
 </self_check>`;
