@@ -738,6 +738,7 @@ PENGECUALIAN (OVERRIDE LARANGAN DI ATAS): Jika elemen sensitif benar-benar terli
 
 3. Keyword (Inggris & Indonesia):
    - Berjumlah TEPAT ${settings.keywordCount} buah, dipisah koma dan spasi.
+   - FORMAT: Seluruh keyword WAJIB ditulis dalam huruf kecil (lowercase) sepenuhnya.
    - SISTEM TIER (GRADASI BOBOT):
      * Tier 1 (Urutan 1-10): MURNI FISIK & VISUAL. Hanya objek nyata, detail mikro (jika ada), warna, dan gaya. Inti subjek Judul WAJIB masuk di sini. UJI LOGIKA EKSTREM: Jika kata tersebut tidak bisa disentuh atau difoto wujudnya secara harfiah (misal kata yang melambangkan konsep abstrak atau industri), DILARANG KERAS masuk ke urutan 1-10!
      * Tier 2 (Urutan 11-25): KONSEP SPESIFIK & AKSI. WAJIB spesifik pada makna UNIK gambar ini! HINDARI kata konsep generik yang dipukul rata untuk semua gambar yang kebetulan bertema sama.
@@ -750,9 +751,9 @@ PENGECUALIAN (OVERRIDE LARANGAN DI ATAS): Jika elemen sensitif benar-benar terli
 7. MiriCanvas: Sesuaikan 'miricanvas_type' secara logis dengan medianya. Jika foto nyata (Photo/Background), jika ilustrasi/vektor (SVG/PNG element), jika video (Video). Atur 'miricanvas_tier' ke 'Premium' KECUALI user meminta 'Standard'.
 
 8. Metadata Mandarin (500px/VCG):
-   - title_zh & description_zh: JANGAN terjemahkan struktur kalimat Inggris kata-per-kata. Susun ULANG sebagai kalimat Mandarin natural dari nol. PENTING: title_zh WAJIB hanya memuat elemen yang SAMA PERSIS dengan title_en, JANGAN menambahkan detail yang hanya ada di deskripsi.
+   - title_zh & description_zh: JANGAN terjemahkan struktur kalimat Inggris kata-per-kata. Susun ULANG sebagai kalimat Mandarin natural dari nol. PENTING: title_zh WAJIB memuat elemen yang SAMA PERSIS maknanya dengan title_en. DILARANG KERAS menambahkan kata pelengkap abstrak, konsep baru, atau detail ekstra yang tidak memiliki padanan langsung di title_en. Restrukturisasi tata bahasa diizinkan, penambahan makna dilarang.
    - category_vcg: Pilih TEPAT 1 (Mandarin) dari: [${vcgCats}]. Prioritaskan BENTUK VISUAL/FISIK jika ragu. DILARANG menebak tema konseptual yang tidak berwujud. JIKA INI VIDEO, WAJIB diisi dengan string kosong "".
-   - keywords_zh: Maksimal 35 KATA/BUAH FRASA (词). Gunakan Hanzi Sederhana. WAJIB patuhi SISTEM TIER dan REGULASI FRASA pada Aturan No 3 secara ketat. PENTING: keywords_zh WAJIB tunduk pada Uji Logika Ekstrem yang sama seperti Rule #3 (kata abstrak/tidak berwujud fisik mutlak DILARANG di posisi 1-10). WAJIB menggunakan terminologi industri desain/fotografi Tiongkok. Pisahkan frasa dengan spasi tunggal, TANPA koma atau simbol.
+   - keywords_zh: Maksimal 35 KATA/BUAH FRASA (词). Gunakan Hanzi Sederhana. WAJIB patuhi SISTEM TIER dan REGULASI FRASA pada Aturan No 3 secara ketat. PENTING: keywords_zh WAJIB tunduk pada Uji Logika Ekstrem yang sama seperti Rule #3 (kata abstrak/tidak berwujud fisik mutlak DILARANG di posisi 1-10). WAJIB dicek silang untuk mencegah duplikasi Hanzi yang bermakna identik akibat terjemahan sinonim; jika ada, hapus salah satu. WAJIB menggunakan terminologi industri desain/fotografi Tiongkok. Pisahkan frasa dengan spasi tunggal, TANPA koma atau simbol.
 
 9. Output: TIGA BAHASA (Inggris, Indonesia, Mandarin) dalam JSON.${transparentInstruction}
 </aturan_ketat_metadata>
@@ -762,7 +763,9 @@ SEBELUM MENGEMBALIKAN JSON, LAKUKAN PENGECEKAN TERTUTUP:
 - Apakah Anda 100% mematuhi Formula Judul dan Deskripsi yang ditugaskan secara spesifik?
 - Apakah "detail mikro" yang disebutkan di judul/keyword BENAR-BENAR terlihat di gambar, atau hanya dikarang untuk memenuhi kuota variasi? Jika mengarang/halusinasi, hapus dan ganti dengan elemen yang benar-benar nyata!
 - Apakah urutan 1-10 pada keyword (termasuk keywords_zh Mandarin) berisi kata abstrak yang tidak bisa disentuh/difoto? Jika YA, pindahkan ke Tier 2 atau Tier 3!
-- Apakah title_zh Mandarin menambahkan objek visual yang tidak disebutkan di title_en? Jika YA, hapus agar konsisten!
+- Apakah seluruh keyword (EN dan ID) sudah ditulis dalam huruf kecil (lowercase)?
+- Apakah ada duplikasi kata/makna pada keywords_zh akibat terjemahan sinonim? Jika YA, hapus duplikatnya!
+- Apakah title_zh Mandarin menambahkan kata konsep/makna baru yang tidak disebutkan di title_en? Jika YA, hapus agar konsisten!
 - Apakah kata-kata konseptual (Tier 2) sudah benar-benar spesifik secara unik untuk gambar ini?
 </self_check>`;
 
