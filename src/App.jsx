@@ -262,6 +262,15 @@ export default function App() {
   const [loginEmail, setLoginEmail] = useState('');
   const [loginState, setLoginState] = useState('idle'); // idle, loading, success, failed
   
+  // TAMBAHKAN DUA BARIS INI:
+  const [showFullEmail, setShowFullEmail] = useState(false);
+  const getMaskedEmail = (email) => {
+      if (!email) return '';
+      const [name, domain] = email.split('@');
+      if (!domain) return email;
+      return '*'.repeat(name.length) + '@' + domain;
+  };
+  
   // --- TOAST STATE ---
   const [toast, setToast] = useState({ show: false, message: '', type: 'success' }); // type: success | error
 
@@ -1326,9 +1335,11 @@ Kembalikan seluruh data JSON (English, Indonesia, & Mandarin) secara lengkap dan
             </div>
 
             <div className={`flex flex-col items-center justify-center w-full max-w-sm px-4 z-10 transition-all duration-500 ${loginState === 'success' ? 'opacity-0 scale-110' : 'opacity-100 scale-100'}`}>
-                <div className="w-full bg-white p-6 rounded-lg border border-slate-200 shadow-md flex flex-col gap-4 relative z-10">
+                {/* Di bawah ini border-slate-200 diubah menjadi border-blue-200 */}
+                <div className="w-full bg-white p-6 rounded-lg border border-blue-200 shadow-md flex flex-col gap-4 relative z-10">
                     <input type="email" value={loginEmail} onChange={e => setLoginEmail(e.target.value)} onKeyDown={e => e.key === 'Enter' && handleLogin()} className="w-full p-3 rounded-lg bg-white border border-slate-300 text-slate-800 font-bold text-center outline-none transition-all h-12 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:opacity-50 disabled:bg-slate-100" placeholder="MASUKKAN EMAIL" disabled={loginState === 'loading' || loginState === 'success'} />
-                    <button onClick={handleLogin} disabled={loginState === 'loading' || loginState === 'success'} className="bg-slate-800 text-white p-3 text-base font-bold rounded-lg cursor-pointer shadow-sm transition hover:bg-slate-900 disabled:opacity-50">
+                    {/* Di bawah ini class bg-slate-800 diubah menjadi bg-blue-600 hover:bg-blue-700 */}
+                    <button onClick={handleLogin} disabled={loginState === 'loading' || loginState === 'success'} className="bg-blue-600 hover:bg-blue-700 text-white p-3 text-base font-bold rounded-lg cursor-pointer shadow-sm transition disabled:opacity-50">
                         {loginState === 'loading' ? 'MEMPROSES...' : 'LOGIN'}
                     </button>
                 </div>
@@ -1378,19 +1389,29 @@ Kembalikan seluruh data JSON (English, Indonesia, & Mandarin) secara lengkap dan
               <div className="p-4 flex flex-col gap-4">
                 
                 {/* ACTIVE USER PANEL (Menggantikan My Project & Support) */}
-                <div className="flex items-center justify-between p-3 bg-white border border-slate-200 rounded-lg shadow-sm">
+                {/* border-slate-200 diubah menjadi border-blue-200 */}
+                <div className="flex items-center justify-between p-3 bg-white border border-blue-200 rounded-lg shadow-sm">
                     <div className="flex items-center gap-2 overflow-hidden">
                         <div className="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center shrink-0">
                             <UserIcon className="w-4 h-4" />
                         </div>
                         <div className="flex flex-col min-w-0">
                             <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none">Email Aktif</span>
-                            <span className="text-xs font-bold text-slate-700 truncate pr-2">{authEmail}</span>
+                            {/* Email dipanggil melalui logika sensor bintang */}
+                            <span className="text-xs font-bold text-slate-700 truncate pr-2">
+                                {showFullEmail ? authEmail : getMaskedEmail(authEmail)}
+                            </span>
                         </div>
                     </div>
-                    <button onClick={handleLogout} className="p-2 bg-red-50 text-red-600 hover:bg-red-600 hover:text-white rounded-md transition-colors shadow-sm shrink-0" title="Logout">
-                        <LogOutIcon className="w-4 h-4" />
-                    </button>
+                    {/* Tambahan grup div untuk membungkus tombol Mata dan Logout agar bersebelahan */}
+                    <div className="flex items-center gap-1 shrink-0">
+                        <button onClick={() => setShowFullEmail(!showFullEmail)} className="p-2 bg-slate-50 text-slate-500 hover:bg-slate-200 hover:text-slate-700 rounded-md transition-colors shadow-sm shrink-0" title={showFullEmail ? "Sembunyikan Email" : "Tampilkan Email"}>
+                            <EyeIcon className="w-4 h-4" />
+                        </button>
+                        <button onClick={handleLogout} className="p-2 bg-red-50 text-red-600 hover:bg-red-600 hover:text-white rounded-md transition-colors shadow-sm shrink-0" title="Logout">
+                            <LogOutIcon className="w-4 h-4" />
+                        </button>
+                    </div>
                 </div>
 
                 <div className="bg-white p-4 rounded-lg shadow-sm border border-blue-200">
