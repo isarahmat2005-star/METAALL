@@ -710,7 +710,7 @@ export default function App() {
 
     const promptText = `Anda adalah Art Director senior dan kurator metadata microstock profesional. Sebelum membuat metadata, tembus 4 LAPIS ANALISIS VISUAL berikut: 
 1. Fisik Makro (Objek utama & wujud besar)
-2. Fisik Mikro (Gali detail unik JIKA ADA: bentuk pegangan, ketebalan garis, sudut, tekstur, celah) 
+2. Fisik Mikro (Gali detail unik JIKA ADA) 
 3. Konsep (Pesan/emosi yang dibawa) 
 4. Utilitas/Desain (Cara pakai).
 
@@ -727,23 +727,23 @@ PENGECUALIAN (OVERRIDE LARANGAN DI ATAS): Jika elemen sensitif benar-benar terli
 </pantangan_mutlak>
 
 <aturan_ketat_metadata>
-1. Judul (Title): Gunakan angka ${settings.titleLength} karakter sebagai acuan panjang maksimal. 
+1. Judul (Title): Gunakan angka ${settings.titleLength} karakter sebagai acuan panjang maksimal. WAJIB gunakan format Title Case (Huruf Kapital di awal setiap kata) untuk bahasa Inggris dan Indonesia.
    - DILARANG diawali kata sandang bahasa Inggris. DILARANG menggunakan kata sifat hiperbola atau opini subjektif yang tidak berwujud fisik.
    - BUYER-INTENT: Judul wajib berorientasi komersial dengan menyebutkan solusi, konsep industri, atau target kegunaan aset, bukan sekadar deskripsi objek buta.
-   - FORMULA JUDUL WAJIB UNTUK GAMBAR INI: Anda TIDAK BOLEH MEMILIH. Anda WAJIB menggunakan struktur ini: "${assignedTitleFormula}". JIKA gambar memiliki detail fisik mikro yang benar-benar terlihat (pegangan, aksen sudut, tekstur, celah), gunakan untuk memperkaya variasi kata. JIKA gambar terlalu simpel/flat tanpa detail mikro nyata, JANGAN MENGARANG — gunakan variasi dari Konteks Konsep atau Gaya Visual saja.
+   - FORMULA JUDUL WAJIB UNTUK GAMBAR INI: Anda TIDAK BOLEH MEMILIH. Anda WAJIB menggunakan struktur ini: "${assignedTitleFormula}". JIKA gambar memiliki detail fisik mikro pendukung yang benar-benar terlihat, gunakan untuk memperkaya variasi kata. JIKA gambar terlalu simpel/flat tanpa detail mikro nyata, JANGAN MENGARANG — gunakan variasi dari Konteks Konsep atau Gaya Visual saja.
 
 2. Deskripsi (Description): Gunakan angka ${settings.titleLength} sebagai estimasi panjang rata-rata. WAJIB MINIMAL 5 KATA.
-   - ZERO-CLICHE RULE: DILARANG KERAS menggunakan klausa basa-basi, kata sambutan, atau frasa pengantar abstrak di awal kalimat (seperti kata "Ideal untuk", "Menampilkan", "Gambar ini merepresentasikan").
+   - ZERO-CLICHE RULE: DILARANG KERAS menggunakan klausa basa-basi, kata sambutan, atau frasa pengantar abstrak di awal kalimat.
    - FORMULA DESKRIPSI WAJIB UNTUK GAMBAR INI: Anda TIDAK BOLEH MEMILIH. Anda WAJIB mematuhi instruksi pembuka kalimat ini: "${assignedDescFormula}".
 
 3. Keyword (Inggris & Indonesia):
    - Berjumlah TEPAT ${settings.keywordCount} buah, dipisah koma dan spasi.
    - FORMAT: Seluruh keyword WAJIB ditulis dalam huruf kecil (lowercase) sepenuhnya.
    - SISTEM TIER (GRADASI BOBOT):
-     * Tier 1 (Urutan 1-10): MURNI FISIK & VISUAL. Hanya objek nyata, detail mikro (jika ada), warna, dan gaya. Inti subjek Judul WAJIB masuk di sini. UJI LOGIKA EKSTREM: Jika kata tersebut tidak bisa disentuh atau difoto wujudnya secara harfiah (misal kata yang melambangkan konsep abstrak atau industri), DILARANG KERAS masuk ke urutan 1-10!
+     * Tier 1 (Urutan 1-10): MURNI FISIK & VISUAL. Hanya objek nyata, detail mikro (jika ada), warna, dan gaya. Inti subjek Judul WAJIB masuk di sini. UJI LOGIKA EKSTREM: Jika kata tersebut tidak bisa disentuh atau difoto wujudnya secara harfiah, DILARANG KERAS masuk ke urutan 1-10!
      * Tier 2 (Urutan 11-25): KONSEP SPESIFIK & AKSI. WAJIB spesifik pada makna UNIK gambar ini! HINDARI kata konsep generik yang dipukul rata untuk semua gambar yang kebetulan bertema sama.
      * Tier 3 (Urutan 26-akhir): KATEGORI PAYUNG. Industri atau tema luas.
-   - REGULASI FRASA: Maksimal HANYA 15% dari total keyword yang boleh berupa frasa 2 kata, dan HANYA DIKHUSUSKAN untuk istilah industri komersial baku yang maknanya akan rusak jika dipisah. Sisa keyword WAJIB dipisah menjadi kata tunggal (singular). Dilarang keras membuat frasa penggabungan deskriptif yang terdiri dari kata sifat dan kata benda umum, wajib dipecah. Dilarang pakai tanda hubung "-".
+   - REGULASI FRASA: Maksimal HANYA 15% dari total keyword yang boleh berupa frasa 2 kata, dan HANYA DIKHUSUSKAN untuk istilah industri komersial baku yang maknanya akan rusak jika dipisah. PENTING: Meskipun objek kompleks memiliki banyak komponen fisik pendukung, NAMA KOMPONEN TERSEBUT WAJIB DIPECAH menjadi kata tunggal (singular). Sisa keyword WAJIB dipisah menjadi kata tunggal. Dilarang keras membuat frasa penggabungan deskriptif yang terdiri dari kata sifat dan kata benda umum, wajib dipecah. Dilarang pakai tanda hubung.
 
 4. Kategori Adobe: Pilih TEPAT 1 dari: [${adobeCats}]. 
 5. Kategori Shutterstock: WAJIB pilih TEPAT 2 dari: [${shutterCats}]. Pisahkan dengan koma. TIDAK BOLEH KOSONG.
@@ -761,7 +761,9 @@ PENGECUALIAN (OVERRIDE LARANGAN DI ATAS): Jika elemen sensitif benar-benar terli
 <self_check>
 SEBELUM MENGEMBALIKAN JSON, LAKUKAN PENGECEKAN TERTUTUP:
 - Apakah Anda 100% mematuhi Formula Judul dan Deskripsi yang ditugaskan secara spesifik?
+- Apakah Judul (Inggris dan Indonesia) sudah menggunakan format Title Case?
 - Apakah "detail mikro" yang disebutkan di judul/keyword BENAR-BENAR terlihat di gambar, atau hanya dikarang untuk memenuhi kuota variasi? Jika mengarang/halusinasi, hapus dan ganti dengan elemen yang benar-benar nyata!
+- Apakah nama komponen-komponen fisik pendukung pada objek kompleks sudah dipecah menjadi kata tunggal di dalam keyword?
 - Apakah urutan 1-10 pada keyword (termasuk keywords_zh Mandarin) berisi kata abstrak yang tidak bisa disentuh/difoto? Jika YA, pindahkan ke Tier 2 atau Tier 3!
 - Apakah seluruh keyword (EN dan ID) sudah ditulis dalam huruf kecil (lowercase)?
 - Apakah ada duplikasi kata/makna pada keywords_zh akibat terjemahan sinonim? Jika YA, hapus duplikatnya!
