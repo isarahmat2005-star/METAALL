@@ -443,6 +443,7 @@ export default function App() {
 
   const [fileToDelete, setFileToDelete] = useState(null);
   const [clearAllConfirm, setClearAllConfirm] = useState(false);
+  const [logoutConfirm, setLogoutConfirm] = useState(false);
   
   const [currentTime, setCurrentTime] = useState(new Date());
   useEffect(() => { const timer = setInterval(() => setCurrentTime(new Date()), 1000); return () => clearInterval(timer); }, []);
@@ -1404,11 +1405,11 @@ Kembalikan seluruh data JSON (English, Indonesia, & Mandarin) secara lengkap dan
                         </div>
                     </div>
                     {/* Tambahan grup div untuk membungkus tombol Mata dan Logout agar bersebelahan */}
-                    <div className="flex items-center gap-1 shrink-0">
-                        <button onClick={() => setShowFullEmail(!showFullEmail)} className="p-2 bg-slate-50 text-slate-500 hover:bg-slate-200 hover:text-slate-700 rounded-md transition-colors shadow-sm shrink-0" title={showFullEmail ? "Sembunyikan Email" : "Tampilkan Email"}>
+                    <div className="flex items-center gap-1.5 shrink-0">
+                        <button onClick={() => setShowFullEmail(!showFullEmail)} className="w-8 h-8 flex items-center justify-center bg-slate-50 text-slate-500 hover:bg-slate-200 hover:text-slate-700 rounded-md transition-colors shadow-sm shrink-0" title={showFullEmail ? "Sembunyikan Email" : "Tampilkan Email"}>
                             <EyeIcon className="w-4 h-4" />
                         </button>
-                        <button onClick={handleLogout} className="p-2 bg-red-50 text-red-600 hover:bg-red-600 hover:text-white rounded-md transition-colors shadow-sm shrink-0" title="Logout">
+                        <button onClick={() => setLogoutConfirm(true)} className="w-8 h-8 flex items-center justify-center bg-red-50 text-red-600 hover:bg-red-600 hover:text-white rounded-md transition-colors shadow-sm shrink-0" title="Logout">
                             <LogOutIcon className="w-4 h-4" />
                         </button>
                     </div>
@@ -1895,6 +1896,22 @@ Kembalikan seluruh data JSON (English, Indonesia, & Mandarin) secara lengkap dan
                 <div className="flex w-full gap-3">
                    <button onClick={() => setClearAllConfirm(false)} className="flex-1 bg-slate-200 text-slate-700 font-bold py-2 rounded-lg hover:bg-slate-300 transition">Batal</button>
                    <button onClick={confirmClearAllAction} className="flex-1 bg-red-600 text-white font-bold py-2 rounded-lg hover:bg-red-700 transition shadow-sm">Ya, Hapus Semua</button>
+                </div>
+             </div>
+          </div>
+        )}
+
+        {logoutConfirm && (
+          <div className="fixed inset-0 z-[70] flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4">
+             <div className="bg-white rounded-lg shadow-xl p-6 w-full max-w-sm flex flex-col items-center text-center">
+                <div className="bg-red-100 p-3 rounded-full mb-3">
+                  <AlertTriangleIcon />
+                </div>
+                <h3 className="text-lg font-bold text-slate-800">Keluar dari Akun?</h3>
+                <p className="text-sm text-slate-600 mt-2 mb-6">Apakah Anda yakin ingin logout? Anda harus login kembali untuk masuk ke sistem.</p>
+                <div className="flex w-full gap-3">
+                   <button onClick={() => setLogoutConfirm(false)} className="flex-1 bg-slate-200 text-slate-700 font-bold py-2 rounded-lg hover:bg-slate-300 transition">Batal</button>
+                   <button onClick={() => { setLogoutConfirm(false); handleLogout(); }} className="flex-1 bg-red-600 text-white font-bold py-2 rounded-lg hover:bg-red-700 transition shadow-sm">Ya, Logout</button>
                 </div>
              </div>
           </div>
