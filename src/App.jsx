@@ -326,6 +326,12 @@ export default function App() {
 
           saveDeviceIdToDB(currentDeviceId); // pastikan selalu ke-sync ke IndexedDB
           setDeviceId(currentDeviceId);
+
+          if (navigator.storage && navigator.storage.persist) {
+              navigator.storage.persist().then((granted) => {
+                  console.log('Persistent storage granted:', granted);
+              });
+          }
  
           // 2. Check existing session
           const session = localStorage.getItem('metal_session');
