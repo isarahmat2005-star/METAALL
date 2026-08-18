@@ -309,32 +309,36 @@ export default function App() {
   
   // Initialize App and Check Auth
   useEffect(() => {
-    // 1. Setup Device ID (cross-check localStorage + IndexedDB)
-    let currentDeviceId = localStorage.getItem('metal_device_id');
-    const dbDeviceId = await loadDeviceIdFromDB();
+     const initAuth = async () => {
+          // 1. Setup Device ID (cross-check localStorage + IndexedDB)
+          let currentDeviceId = localStorage.getItem('metal_device_id');
+          const dbDeviceId = await loadDeviceIdFromDB();
+  
+          if (!currentDeviceId && dbDeviceId) {
+              // localStorage kosong tapi IndexedDB masih ada -> pulihkan dari sana
+              currentDeviceId = dbDeviceId;
+              localStorage.setItem('metal_device_id', currentDeviceId);
+          } else if (!currentDeviceId) {
+            // Keduanya kosong -> baru benar-benar device baru
+              currentDeviceId = 'dev_' + Math.random().toString(36).substring(2, 15);
+              localStorage.setItem('metal_device_id', currentDeviceId);
+          }
 
-    if (!currentDeviceId && dbDeviceId) {
-    // localStorage kosong tapi IndexedDB masih ada -> pulihkan dari sana
-        currentDeviceId = dbDeviceId;
-        localStorage.setItem('metal_device_id', currentDeviceId);
-    } else if (!currentDeviceId) {
-    // Keduanya kosong -> baru benar-benar device baru
-        currentDeviceId = 'dev_' + Math.random().toString(36).substring(2, 15);
-        localStorage.setItem('metal_device_id', currentDeviceId);
-    }
-
-    saveDeviceIdToDB(currentDeviceId); // pastikan selalu ke-sync ke IndexedDB
-    setDeviceId(currentDeviceId);
-
-    // 2. Check existing session
-    const session = localStorage.getItem('metal_session');
-    if (session) {
-        const parsedSession = JSON.parse(session);
-        // Optional: Check expiry if needed. For now, trust the session.
-        setIsAuthenticated(true);
-        setAuthEmail(parsedSession.email);
-        loadInitialData(); // Load IndexedDB data only after confirmed auth
-    }
+          saveDeviceIdToDB(currentDeviceId); // pastikan selalu ke-sync ke IndexedDB
+          setDeviceId(currentDeviceId);
+ 
+          // 2. Check existing session
+          const session = localStorage.getItem('metal_session');
+          if (session) {
+              const parsedSession = JSON.parse(session);
+              // Optional: Check expiry if needed. For now, trust the session.
+              setIsAuthenticated(true);
+              setAuthEmail(parsedSession.email);
+              loadInitialData(); // Load IndexedDB data only after confirmed auth
+          }
+      };
+ 
+      initAuth();
   }, []);
 
   const loadInitialData = async () => {
