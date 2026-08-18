@@ -22,8 +22,9 @@ const GAS_AUTH_URL = "https://script.google.com/macros/s/AKfycby-Glpl6jFyhvvUAYw
 // === INDEXED DB HELPER FUNCTIONS ===
 // =====================================================================
 const DB_NAME = 'MetalDB';
-const DB_VERSION = 1;
+const DB_VERSION = 2;
 const STORE_NAME = 'files_store';
+const META_STORE_NAME = 'meta_store';
 
 const initDB = () => {
     return new Promise((resolve, reject) => {
@@ -34,6 +35,9 @@ const initDB = () => {
             const db = event.target.result;
             if (!db.objectStoreNames.contains(STORE_NAME)) {
                 db.createObjectStore(STORE_NAME, { keyPath: 'id' });
+            }
+            if (!db.objectStoreNames.contains(META_STORE_NAME)) {
+              db.createObjectStore(META_STORE_NAME, { keyPath: 'key' }); 
             }
         };
     });
@@ -252,6 +256,30 @@ const extractDataJIT = async (fileItem, numFrames, signal) => {
   });
 };
 
+const saveDeviceIdToDB = async (id) => {
+    try {
+        const db = await initDB();
+        const tx = db.transaction(META_STORE_NAME, 'readwrite');
+        tx.objectStore(META_STORE_NAME).put({ key: 'device_id', value: id });
+    } catch (err) {
+        console.error('Gagal simpan device id ke IndexedDB:', err);
+    }
+};
+
+const loadDeviceIdFromDB = () => {
+    return new Promise(async (resolve) => {
+        try {
+            const db = await initDB();
+            const tx = db.transaction(META_STORE_NAME, 'readonly');
+            const req = tx.objectStore(META_STORE_NAME).get('device_id');
+            req.onsuccess = () => resolve(req.result ? req.result.value : null);
+            req.onerror = () => resolve(null);
+        } catch (err) {
+            resolve(null);
+        }
+    });
+};
+
 export default function App() {
   const [copiedId, setCopiedId] = useState(null);
   const [deviceId, setDeviceId] = useState('');
@@ -281,12 +309,21 @@ export default function App() {
   
   // Initialize App and Check Auth
   useEffect(() => {
-    // 1. Setup Device ID
+    // 1. Setup Device ID (cross-check localStorage + IndexedDB)
     let currentDeviceId = localStorage.getItem('metal_device_id');
-    if (!currentDeviceId) {
+    const dbDeviceId = await loadDeviceIdFromDB();
+
+    if (!currentDeviceId && dbDeviceId) {
+    // localStorage kosong tapi IndexedDB masih ada -> pulihkan dari sana
+        currentDeviceId = dbDeviceId;
+        localStorage.setItem('metal_device_id', currentDeviceId);
+    } else if (!currentDeviceId) {
+    // Keduanya kosong -> baru benar-benar device baru
         currentDeviceId = 'dev_' + Math.random().toString(36).substring(2, 15);
         localStorage.setItem('metal_device_id', currentDeviceId);
     }
+
+    saveDeviceIdToDB(currentDeviceId); // pastikan selalu ke-sync ke IndexedDB
     setDeviceId(currentDeviceId);
 
     // 2. Check existing session
