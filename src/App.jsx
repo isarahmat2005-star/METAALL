@@ -16,7 +16,7 @@ import { loadJSZip, isVectorExt, isVideoFile, handleCopy, calculateTargetSize } 
 // === KONFIGURASI GOOGLE APPS SCRIPT (SATPAM LOGIN) ===
 // Masukkan URL Deployment Web App dari Google Apps Script Anda di sini.
 // =====================================================================
-const GAS_AUTH_URL = "https://script.google.com/macros/s/AKfycby-Glpl6jFyhvvUAYwVw8_ML2lvhgn6SyHrntv1BVARbZOwZtmHR_SZxv4MVrMH3krGKQ/exec"; 
+const GAS_AUTH_URL = "https://script.google.com/macros/s/AKfycbx5pWDC7QOECHiaqlc0hHmitXfTa_YdSUcq08aqy5s37THyVpBIUovvxKwovuvotVWvsg/exec"; 
 
 // =====================================================================
 // === INDEXED DB HELPER FUNCTIONS ===
