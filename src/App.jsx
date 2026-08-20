@@ -1370,6 +1370,9 @@ Kembalikan seluruh data JSON (English, Indonesia, & Mandarin) secara lengkap dan
           <div className="fixed inset-0 flex items-center justify-center bg-slate-100 overflow-hidden" style={{ fontFamily: "'Share Tech', sans-serif", backgroundImage: 'linear-gradient(rgba(59, 130, 246, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(59, 130, 246, 0.05) 1px, transparent 1px)', backgroundSize: '20px 20px' }}>
             <style>{`
                 @import url('https://fonts.googleapis.com/css2?family=Share+Tech&display=swap');
+                /* CSS Animasi Titik Jalan */
+                .dot-anim::after { content: ''; animation: dots 1.5s steps(4, end) infinite; }
+                @keyframes dots { 0% { content: ''; } 25% { content: '.'; } 50% { content: '..'; } 75% { content: '...'; } 100% { content: ''; } }
             `}</style>
 
             {/* GLOBAL TOAST NOTIFICATION */}
@@ -1389,7 +1392,7 @@ Kembalikan seluruh data JSON (English, Indonesia, & Mandarin) secara lengkap dan
                     <input type="email" value={loginEmail} onChange={e => setLoginEmail(e.target.value)} onKeyDown={e => e.key === 'Enter' && handleLogin()} className="w-full p-3 rounded-lg bg-white border border-slate-300 text-slate-800 font-bold text-center outline-none transition-all h-12 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:opacity-50 disabled:bg-slate-100" placeholder="MASUKKAN EMAIL" disabled={loginState === 'loading' || loginState === 'success'} />
                     {/* Di bawah ini class bg-slate-800 diubah menjadi bg-blue-600 hover:bg-blue-700 */}
                     <button onClick={handleLogin} disabled={loginState === 'loading' || loginState === 'success'} className="bg-blue-600 hover:bg-blue-700 text-white p-3 text-base font-bold rounded-lg cursor-pointer shadow-sm transition disabled:opacity-50">
-                        {loginState === 'loading' ? 'MEMPROSES...' : 'LOGIN'}
+                        {loginState === 'loading' ? <>MEMPROSES<span className="dot-anim inline-block w-3 text-left"></span></> : 'LOGIN'}
                     </button>
                 </div>
             </div>
@@ -1405,6 +1408,9 @@ Kembalikan seluruh data JSON (English, Indonesia, & Mandarin) secara lengkap dan
         .custom-scroll::-webkit-scrollbar { width: 4px; height: 4px; }
         .custom-scroll::-webkit-scrollbar-track { background: transparent; }
         .custom-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        /* CSS Animasi Titik Jalan untuk Tombol Generate */
+        .dot-anim::after { content: ''; animation: dots 1.5s steps(4, end) infinite; }
+        @keyframes dots { 0% { content: ''; } 25% { content: '.'; } 50% { content: '..'; } 75% { content: '...'; } 100% { content: ''; } }
       `}</style>
       
       {/* GLOBAL TOAST NOTIFICATION */}
@@ -1582,11 +1588,11 @@ Kembalikan seluruh data JSON (English, Indonesia, & Mandarin) secara lengkap dan
                   </div>
               </div>
 
-              <div className="flex gap-1.5 h-10">
+             <div className="flex gap-1.5 h-10">
                   {isCurrentTabProcessing ? (
                       <div className={`flex-1 bg-gradient-to-r border text-xs font-bold rounded-lg flex items-center justify-center gap-2 shadow-sm select-none transition-all duration-300 ${getLoadingButtonStyle()}`}>
                           <SparklesIcon className={`w-4 h-4 ${isPaused ? '' : 'animate-spin'} ${getLoadingIconColor()}`} style={{ animationDuration: '3s' }} />
-                          <span className="uppercase tracking-wide">{isTabPaused ? 'Terhenti' : <>Memproses<span className="dot-anim inline-block w-3 text-left"></span></>}</span>
+                          <span className="uppercase truncate tracking-wide">{isPaused ? 'Terhenti' : <>Memproses<span className="dot-anim inline-block w-3 text-left"></span></>}</span>
                       </div>
                   ) : (
                       <button 
