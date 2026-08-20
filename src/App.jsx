@@ -1385,6 +1385,9 @@ Kembalikan seluruh data JSON (English, Indonesia, & Mandarin) secara lengkap dan
             <div className={`flex flex-col items-center justify-center w-full max-w-sm px-4 z-10 transition-all duration-500 ${loginState === 'success' ? 'opacity-0 scale-110' : 'opacity-100 scale-100'}`}>
                 {/* Di bawah ini border-slate-200 diubah menjadi border-blue-200 */}
                 <div className="w-full bg-white p-6 rounded-lg border border-blue-200 shadow-md flex flex-col gap-4 relative z-10">
+                    <div className="text-center mb-2">
+                        <h1 className="text-2xl font-bold text-blue-600 tracking-widest">METAL LOGIN</h1>
+                    </div>
                     <input type="email" value={loginEmail} onChange={e => setLoginEmail(e.target.value)} onKeyDown={e => e.key === 'Enter' && handleLogin()} className="w-full p-3 rounded-lg bg-white border border-slate-300 text-slate-800 font-bold text-center outline-none transition-all h-12 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 disabled:opacity-50 disabled:bg-slate-100" placeholder="MASUKKAN EMAIL" disabled={loginState === 'loading' || loginState === 'success'} />
                     {/* Di bawah ini class bg-slate-800 diubah menjadi bg-blue-600 hover:bg-blue-700 */}
                     <button onClick={handleLogin} disabled={loginState === 'loading' || loginState === 'success'} className="bg-blue-600 hover:bg-blue-700 text-white p-3 text-base font-bold rounded-lg cursor-pointer shadow-sm transition disabled:opacity-50">
