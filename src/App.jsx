@@ -1586,7 +1586,7 @@ Kembalikan seluruh data JSON (English, Indonesia, & Mandarin) secara lengkap dan
                   {isCurrentTabProcessing ? (
                       <div className={`flex-1 bg-gradient-to-r border text-xs font-bold rounded-lg flex items-center justify-center gap-2 shadow-sm select-none transition-all duration-300 ${getLoadingButtonStyle()}`}>
                           <SparklesIcon className={`w-4 h-4 ${isPaused ? '' : 'animate-spin'} ${getLoadingIconColor()}`} style={{ animationDuration: '3s' }} />
-                          <span className="uppercase truncate tracking-wide">{isPaused ? 'Terhenti' : 'Memproses...'}</span>
+                          <span className="uppercase tracking-wide">{isTabPaused ? 'Terhenti' : <>Memproses<span className="dot-anim inline-block w-3 text-left"></span></>}</span>
                       </div>
                   ) : (
                       <button 
