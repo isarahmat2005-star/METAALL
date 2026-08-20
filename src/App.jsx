@@ -378,10 +378,9 @@ export default function App() {
               // Simpan sesi
               localStorage.setItem('metal_session', JSON.stringify({ email: loginEmail }));
               setAuthEmail(loginEmail);
-              
-              // Transisi instan ke main app tanpa delay
-              setIsAuthenticated(true);
-              loadInitialData();
+              setTimeout(() => {
+                setIsAuthenticated(true);
+            }, 300);
               
           } else {
               setLoginState('failed');
