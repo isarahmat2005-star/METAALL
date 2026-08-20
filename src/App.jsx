@@ -378,9 +378,8 @@ export default function App() {
               // Simpan sesi
               localStorage.setItem('metal_session', JSON.stringify({ email: loginEmail }));
               setAuthEmail(loginEmail);
-              setTimeout(() => {
-                setIsAuthenticated(true);
-            }, 300);
+              setIsAuthenticated(true);
+              loadInitialData();
               
           } else {
               setLoginState('failed');
